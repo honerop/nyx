@@ -87,6 +87,24 @@ fi
 echo "--> Generating hardware-configuration.nix"
 nixos-generate-config --root /mnt --dir /mnt/etc/nixos/hosts/template
 
+echo
+DEFAULT_USER="me"
+read -rp "Username [${DEFAULT_USER}]: " USERNAME
+USERNAME="${USERNAME:-$DEFAULT_USER}"
+if ! [[ "$USERNAME" =~ ^[a-z_][a-z0-9_-]*$ ]]; then
+  echo "error: '${USERNAME}' isn't a valid Linux username (lowercase letters/digits/-/_, can't start with a digit)" >&2
+  exit 1
+fi
+
+TARGET_CONFIG="/mnt/etc/nixos/hosts/template/configuration.nix"
+if [ "$USERNAME" != "$DEFAULT_USER" ] && [ -f "$TARGET_CONFIG" ]; then
+  echo "--> Renaming default user '${DEFAULT_USER}' to '${USERNAME}' in ${TARGET_CONFIG}"
+  sed -i \
+    -e "s/users\.users\.${DEFAULT_USER}\b/users.users.${USERNAME}/g" \
+    -e "s/home-manager\.users\.${DEFAULT_USER}\b/home-manager.users.${USERNAME}/g" \
+    "$TARGET_CONFIG"
+fi
+
 echo "--> Running nixos-install (this takes a while)"
 # Cap build parallelism so peak memory use per build stays low — trades
 # speed for headroom, which matters more on constrained VMs/hardware.
@@ -95,7 +113,7 @@ max-jobs = 1"
 nixos-install --root /mnt --flake /mnt/etc/nixos#nyx --no-root-passwd
 
 echo
-echo "--> Set a password for the 'me' user"
+echo "--> Set a password for the '${USERNAME}' user"
 while true; do
   read -rsp "Password: " PASS1; echo
   read -rsp "Confirm password: " PASS2; echo
@@ -109,7 +127,7 @@ while true; do
   fi
   break
 done
-echo "me:${PASS1}" | nixos-enter --root /mnt -c 'chpasswd'
+echo "${USERNAME}:${PASS1}" | nixos-enter --root /mnt -c 'chpasswd'
 unset PASS1 PASS2
 
 echo
