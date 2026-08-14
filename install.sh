@@ -58,14 +58,16 @@ swapon "$SWAPFILE"
 trap 'swapoff "$SWAPFILE" 2>/dev/null; rm -f "$SWAPFILE"' EXIT
 
 echo "--> Setting up /mnt/etc/nixos as a git repo"
-read -rp "Git remote for your Nyx config (blank to skip, init a local repo instead): " GIT_REMOTE
+DEFAULT_REMOTE="https://github.com/honerop/nyx"
+read -rp "Git remote for your Nyx config [${DEFAULT_REMOTE}] (or 'none' to skip): " GIT_REMOTE
+GIT_REMOTE="${GIT_REMOTE:-$DEFAULT_REMOTE}"
 
 mkdir -p /mnt/etc/nixos
-if [ -n "$GIT_REMOTE" ]; then
+if [ "$GIT_REMOTE" != "none" ]; then
   echo "--> Cloning ${GIT_REMOTE}"
   git clone "$GIT_REMOTE" /mnt/etc/nixos
 else
-  echo "--> No remote given — copying embedded flake and git-initing it locally"
+  echo "--> Skipping remote — copying embedded flake and git-initing it locally"
   cp -r /etc/nyx-src/. /mnt/etc/nixos/
   git -C /mnt/etc/nixos init -q
   git -C /mnt/etc/nixos config user.email "nyx@localhost"
