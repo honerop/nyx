@@ -1,14 +1,14 @@
 { config, pkgs, lib, modulesPath, inputs, ... }:
 {
-  imports = [
+imports = [
     ../../modules/core/base.nix
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/apps.nix
     ../../modules/desktop/theme.nix
-    # Generated at install time by `nixos-generate-config`. Not present
-    # in the repo until install.sh creates it on the target machine.
     ./hardware-configuration.nix
-  ];
+  ] ++ (if builtins.pathExists ./disko.local.nix
+        then [ ./disko.local.nix ]
+        else [ ./disko.nix ]);
 
   networking.hostName = "nyx";
 

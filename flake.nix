@@ -10,9 +10,13 @@
     };
 
     hyprland.url = "github:hyprwm/Hyprland";
+	disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, disko, ... }@inputs:
     let
       system = "x86_64-linux";
     in
@@ -38,6 +42,7 @@
           modules = [
             ./hosts/template/configuration.nix
             home-manager.nixosModules.home-manager
+			disko.nixosModules.disko
           ];
         };
       };

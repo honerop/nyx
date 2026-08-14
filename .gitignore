@@ -1,1 +1,4 @@
 result/
+tmp/
+hosts/template/disko.local.nix
+test-disk.qcow2

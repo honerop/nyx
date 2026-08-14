@@ -53,10 +53,10 @@
 
   environment.systemPackages = with pkgs; [
     (pkgs.writeShellScriptBin "nyx-install" (builtins.readFile ../../install.sh))
+	inputs.disko.packages.${pkgs.system}.disko
     git
     curl
     vim
-    parted
   ];
 
   home-manager.users.live = import ../../home/home.nix;
