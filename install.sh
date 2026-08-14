@@ -95,9 +95,25 @@ max-jobs = 1"
 nixos-install --root /mnt --flake /mnt/etc/nixos#nyx --no-root-passwd
 
 echo
+echo "--> Set a password for the 'me' user"
+while true; do
+  read -rsp "Password: " PASS1; echo
+  read -rsp "Confirm password: " PASS2; echo
+  if [ -z "$PASS1" ]; then
+    echo "Password can't be empty — try again."
+    continue
+  fi
+  if [ "$PASS1" != "$PASS2" ]; then
+    echo "Passwords didn't match — try again."
+    continue
+  fi
+  break
+done
+echo "me:${PASS1}" | nixos-enter --root /mnt -c 'chpasswd'
+unset PASS1 PASS2
+
+echo
 echo "=== Install complete! ==="
-echo "Set your user's password before rebooting:"
-echo "  nixos-enter --root /mnt -c 'passwd me'"
 echo
 echo "To update later: cd /etc/nixos && git pull && sudo nixos-rebuild switch --flake /etc/nixos#nyx"
 echo "Then: reboot"
