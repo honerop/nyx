@@ -7,45 +7,54 @@ echo "This will ERASE the target disk and install Nyx."
 echo
 lsblk
 echo
-
 read -rp "Target disk (e.g. /dev/sda, /dev/nvme0n1): " DISK
 read -rp "This will DESTROY all data on ${DISK}. Type 'yes' to continue: " CONFIRM
 [ "$CONFIRM" = "yes" ] || { echo "Aborted."; exit 1; }
 
-BOOT_PART="${DISK}1"
-ROOT_PART="${DISK}2"
-if [[ "$DISK" == *nvme* || "$DISK" == *mmcblk* ]]; then
-  BOOT_PART="${DISK}p1"
-  ROOT_PART="${DISK}p2"
-fi
+echo "--> Writing temporary Disko config for ${DISK}"
+DISKO_CFG=$(mktemp)
+cat > "$DISKO_CFG" <<EOF
+{
+  disko.devices = {
+    disk = {
+      main = {
+        type = "disk";
+        device = "${DISK}";
+        content = {
+          type = "gpt";
+          partitions = {
+            ESP = {
+              type = "EF00";
+              size = "512M";
+              content = {
+                type = "filesystem";
+                format = "vfat";
+                mountpoint = "/boot";
+                mountOptions = [ "umask=0077" ];
+              };
+            };
+            root = {
+              size = "100%";
+              content = {
+                type = "filesystem";
+                format = "ext4";
+                mountpoint = "/";
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}
+EOF
 
-echo "--> Partitioning ${DISK} (GPT: 512MiB ESP + rest as root)"
-parted -s "$DISK" -- mklabel gpt
-parted -s "$DISK" -- mkpart ESP fat32 1MiB 513MiB
-parted -s "$DISK" -- set 1 esp on
-parted -s "$DISK" -- mkpart primary 513MiB 100%
+echo "--> Running Disko (destroy + format + mount)"
+# Erases the disk, creates partitions, formats them and mounts under /mnt
+nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest -- \
+  --mode destroy,format,mount "$DISKO_CFG"
 
-echo "--> Waiting for the kernel to pick up the new partition table"
-partprobe "$DISK" || true
-udevadm settle
-for i in $(seq 1 20); do
-  [ -b "$BOOT_PART" ] && [ -b "$ROOT_PART" ] && break
-  sleep 0.5
-done
-if [ ! -b "$BOOT_PART" ] || [ ! -b "$ROOT_PART" ]; then
-  echo "error: ${BOOT_PART} or ${ROOT_PART} never appeared — partitioning likely failed" >&2
-  exit 1
-fi
-
-echo "--> Formatting"
-mkfs.fat -F32 -n BOOT "$BOOT_PART"
-mkfs.ext4 -F -L nixos "$ROOT_PART"
-udevadm settle
-
-echo "--> Mounting"
-mount "$ROOT_PART" /mnt
-mkdir -p /mnt/boot
-mount "$BOOT_PART" /mnt/boot
+rm -f "$DISKO_CFG"
 
 echo "--> Setting up temporary swap on the target disk (helps low-RAM installs avoid OOM)"
 SWAPFILE=/mnt/.install-swapfile
@@ -85,7 +94,8 @@ EOF
 fi
 
 echo "--> Generating hardware-configuration.nix"
-nixos-generate-config --root /mnt --dir /mnt/etc/nixos/hosts/template
+# --no-filesystems is important because Disko already defined the filesystems
+nixos-generate-config --root /mnt --no-filesystems --dir /mnt/etc/nixos/hosts/template
 git -C /mnt/etc/nixos add -A
 
 echo
