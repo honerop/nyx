@@ -86,6 +86,7 @@ fi
 
 echo "--> Generating hardware-configuration.nix"
 nixos-generate-config --root /mnt --dir /mnt/etc/nixos/hosts/template
+git -C /mnt/etc/nixos add -A
 
 echo
 DEFAULT_USER="me"
