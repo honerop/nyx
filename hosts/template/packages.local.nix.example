@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
-  # Copy this file to `local.nix` (same directory) and add whatever you
+  # Copy this file to `packages.local.nix` (same directory) and add whatever you
   # personally want on top of the shared package set in
-  # modules/desktop/apps.nix. `local.nix` is .gitignore'd — it won't be
+  # modules/desktop/apps.nix. `packages.local.nix` is .gitignore'd — it won't be
   # committed, so everyone using this repo can keep their own without
   # stepping on anyone else's or on the shared baseline.
   environment.systemPackages = with pkgs; [

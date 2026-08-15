@@ -8,7 +8,8 @@ imports = [
     ./hardware-configuration.nix
   ] ++ (if builtins.pathExists ./disko.local.nix
         then [ ./disko.local.nix ]
-        else [ ./disko.nix ]);
+        else [ ./disko.nix ])
+    ++ lib.optional (builtins.pathExists ./packages.local.nix) ./packages.local.nix;
 
   networking.hostName = "nyx";
 
