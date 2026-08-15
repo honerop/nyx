@@ -1,4 +1,3 @@
-
 #!/usr/bin/env bash
 # Nyx installer — run from the live ISO as: nyx-install
 set -euo pipefail
@@ -161,9 +160,18 @@ if [ "$USERNAME" != "$DEFAULT_USER" ] && [ -f "$TARGET_CONFIG" ]; then
     "$TARGET_CONFIG"
 fi
 
+echo
+DEFAULT_MAX_JOBS="$(nproc 2>/dev/null || echo 1)"
+read -rp "Parallel build jobs (max-jobs) [${DEFAULT_MAX_JOBS}]: " MAX_JOBS
+MAX_JOBS="${MAX_JOBS:-$DEFAULT_MAX_JOBS}"
+if ! [[ "$MAX_JOBS" =~ ^[0-9]+$ ]] || [ "$MAX_JOBS" -lt 1 ]; then
+  echo "warning: '${MAX_JOBS}' isn't a valid positive integer, falling back to ${DEFAULT_MAX_JOBS}" >&2
+  MAX_JOBS="$DEFAULT_MAX_JOBS"
+fi
+
 echo "--> Running nixos-install (this takes a while)"
 export NIX_CONFIG="cores = 1
-max-jobs = 1"
+max-jobs = ${MAX_JOBS}"
 nixos-install --root /mnt --flake /mnt/etc/nixos#nyx --no-root-passwd
 
 echo
