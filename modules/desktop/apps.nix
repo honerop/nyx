@@ -24,7 +24,7 @@
     brightnessctl
 
     # system tray bits
-    pavucontrol
+	wireplumber
     networkmanagerapplet
 
     # everyday apps
