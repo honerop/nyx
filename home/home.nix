@@ -38,17 +38,40 @@
       ];
     };
   };
+;
+  
+programs.waybar = {
+  enable = true;
+  settings.mainBar = {
+    layer = "top";
+    position = "top";
+    height = 32;
+    modules-center = [ "clock" ];
 
-  programs.waybar = {
-    enable = true;
-    settings.mainBar = {
-      layer = "top";
-      position = "top";
-      modules-left = [ "hyprland/workspaces" ];
-      modules-center = [ "clock" ];
-      modules-right = [ "pulseaudio" "network" "battery" "tray" ];
+    clock = {
+      format = "{:%H:%M}";
+      format-alt = "{:%A, %d %B %Y}";
+      tooltip-format = "{:%Y-%m-%d}";
     };
   };
+
+  style = ''
+    * {
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    window#waybar {
+      background: #1e1e2e;
+      color: #ffffff;
+    }
+
+    #clock {
+      padding: 0 12px;
+      color: #ffffff;
+    }
+  '';
+};
 
   programs.kitty = {
     enable = true;
