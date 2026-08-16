@@ -39,7 +39,24 @@ in
     # everyday apps
     neovim
 	firefox
+	git
   ];
+  programs.fish = {
+	shellAliases = {
+			#everyday apps
+			n = "nvim";
+			f = "firefox";
+			# git
+			gs = "git status";
+			ga = "git add -A";
+			gc = "git commit";
+			gp = "git push";
+
+
+		};
+
+	};
+
 
   programs.fish.enable = true;
 
