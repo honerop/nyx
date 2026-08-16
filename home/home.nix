@@ -41,7 +41,6 @@
       ];
 
       exec-once = [
-		"hyprpaper"
         "waybar"
         "mako"
         "hypridle"
@@ -117,6 +116,7 @@ programs.waybar = {
     };
   };
   services.hyprpaper = {
+    enable = true;
     settings = {
       preload = [ "${../assets/wallpaper.png}" ];
       wallpaper = [ ",${../assets/wallpaper.png}" ];
