@@ -11,6 +11,12 @@
   image.baseName = lib.mkForce "nyx";
   isoImage.squashfsCompression = "zstd -Xcompression-level 6";
 
+  system.nixos.distroName = "Nyx";
+
+  system.nixos.distroId = "nyx";
+isoImage.grubTheme = pkgs.callPackage ../../branding/grub-theme { };
+
+
   # We don't use ZFS at all; silence the boot.zfs.forceImportRoot default warning
   # by opting in to the new (safer) default explicitly.
   boot.zfs.forceImportRoot = false;
