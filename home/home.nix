@@ -27,6 +27,15 @@
         "$mod SHIFT, 2, movetoworkspace, 2"
         "$mod SHIFT, 3, movetoworkspace, 3"
         "$mod SHIFT, 4, movetoworkspace, 4"
+	"$mod, h, movefocus, l"
+	"$mod, l, movefocus, r"
+	"$mod, k, movefocus, u"
+	"$mod, j, movefocus, d"
+	"$mod SHIFT, h,  resizeactive, -50 0"
+	"$mod SHIFT, l, resizeactive, 50 0"
+	"$mod SHIFT, k,    resizeactive, 0 -50"
+	"$mod SHIFT, j,  resizeactive, 0 50"
+
 
         ", Print, exec, grim -g \"$(slurp)\" - | wl-copy"
       ];
