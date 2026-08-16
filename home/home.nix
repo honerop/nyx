@@ -14,7 +14,7 @@
       bind = [
         "$mod, RETURN, exec, $term"
         "$mod, Q, killactive"
-        "$mod, D, exec, wofi --show drun"
+        "$mod, SPACE, exec, wofi --show drun"
         "$mod, F, fullscreen"
         "$mod, V, togglefloating"
         "$mod SHIFT, E, exit"
