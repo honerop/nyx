@@ -19,6 +19,7 @@ in
 	ghostty 
     starship
     fish
+    zoxide
 
     # wallpaper / lock / idle
     hyprpaper
