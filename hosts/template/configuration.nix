@@ -24,6 +24,7 @@ imports = [
   home-manager.users.me = import ../../home/home.nix;
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+	programs.fish.enable = true;
 
   system.stateVersion = "25.05";
 }
