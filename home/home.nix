@@ -38,7 +38,7 @@
       ];
     };
   };
-;
+
   
 programs.waybar = {
   enable = true;
