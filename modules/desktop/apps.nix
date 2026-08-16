@@ -41,34 +41,7 @@ in
 	firefox
 	git
   ];
-  programs.fish = {
-	shellAliases = {
-			#everyday apps
-			n = "nvim";
-			f = "firefox";
-			# git
-			gs = "git status";
-			ga = "git add -A";
-			gc = "git commit";
-			gp = "git push";
-
-
-		};
-
-	};
-
-
-  programs.fish.enable = true;
-
-  programs.firefox = {
-    enable = true;
-    policies.ExtensionSettings = {
-      "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
-        install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/vimium-ff/latest.xpi";
-        installation_mode = "force_installed";
-      };
-    };
-  };
+  
   # Force-install Vimium into zen-browser on first launch.
  
 }

@@ -57,7 +57,35 @@
       confirm_os_window_close = 0;
     };
   };
+	programs.fish = {
+	shellAliases = {
+			#everyday apps
+			n = "nvim";
+			f = "firefox";
+			# git
+			gs = "git status";
+			ga = "git add -A";
+			gc = "git commit";
+			gp = "git push";
 
+
+		};
+
+	};
+
+
+
+  programs.firefox = {
+    enable = true;
+    policies.ExtensionSettings = {
+      "{d7742d87-e61d-4b78-b8a1-b469842139fa}" = {
+        install_url = "https://addons.mozilla.org/en-US/firefox/downloads/latest/vimium-ff/latest.xpi";
+        installation_mode = "force_installed";
+      };
+    };
+  };
+
+  programs.fish.enable = true;
   programs.git.enable = true;
   programs.starship.enable = true;
 
