@@ -16,7 +16,7 @@ in
     mako
 
     # terminal + shell
-    kitty
+	ghostty 
     starship
     fish
 

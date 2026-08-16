@@ -9,7 +9,7 @@
     settings = {
       monitor = ",preferred,auto,1";
       "$mod" = "SUPER";
-      "$term" = "kitty";
+      "$term" = "ghostty";
 
       bind = [
         "$mod, RETURN, exec, $term"
@@ -33,7 +33,6 @@
 
       exec-once = [
         "waybar"
-        "hyprpaper"
         "mako"
         "hypridle"
       ];
@@ -84,6 +83,14 @@
       };
     };
   };
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      preload = [ "${../assets/wallpaper.png}" ];
+      wallpaper = [ ",${../assets/wallpaper.png}" ];
+    };
+  };
+
 
   programs.fish.enable = true;
   programs.git.enable = true;
