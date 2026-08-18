@@ -3,4 +3,5 @@ tmp/
 hosts/template/disko.local.nix
 test-disk.qcow2
 **/local.nix
+**/packages.local.nix
 result
