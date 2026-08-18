@@ -12,6 +12,8 @@
   isoImage.squashfsCompression = "zstd -Xcompression-level 6";
 
   system.nixos.distroName = "Nyx";
+  home-manager.extraSpecialArgs = { inherit inputs; };
+
 
   system.nixos.distroId = "nyx";
 isoImage.grubTheme = pkgs.callPackage ../../branding/grub-theme { };

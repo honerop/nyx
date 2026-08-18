@@ -5,6 +5,7 @@ imports = [
     ../../modules/desktop/hyprland.nix
     ../../modules/desktop/apps.nix
     ../../modules/desktop/theme.nix
+    ../../modules/hardware/bluetooth.nix
     ./hardware-configuration.nix
   ] ++ (if builtins.pathExists ./disko.local.nix
         then [ ./disko.local.nix ]
@@ -22,6 +23,7 @@ imports = [
   };
 
   home-manager.users.me = import ../../home/home.nix;
+  home-manager.extraSpecialArgs = { inherit inputs; };
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
 	programs.fish.enable = true;
