@@ -14,10 +14,16 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+  nixvim = {
+    url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
+  };
+
   
   };
 
-  outputs = { self, nixpkgs, home-manager, hyprland, disko, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, hyprland, disko, nixvim,... }@inputs:
     let
       system = "x86_64-linux";
     in
