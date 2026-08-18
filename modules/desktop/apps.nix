@@ -15,6 +15,8 @@ in
     wofi
     mako
 
+  bibata-cursors
+
     # terminal + shell
 	ghostty 
     starship
@@ -39,9 +41,11 @@ in
 
     # everyday apps
     neovim
+    goose-cli
 	firefox
 	git
-  ];
+
+ ];
   
   # Force-install Vimium into zen-browser on first launch.
  
