@@ -7,16 +7,28 @@ A NixOS-based Hyprland desktop distro with opinionated defaults, one bootable IS
 and a declarative, reproducible installer via Nix flakes
 ## Layout
 
+The project has been reorganized for better clarity and maintainability. Here’s the updated structure:
+
 ```
-flake.nix                     entry point, defines two systems: `iso` and `nyx`
-hosts/iso/configuration.nix   the live ISO (auto-login desktop + installer)
-hosts/template/configuration.nix   what gets installed to disk
-modules/core/base.nix         bootloader, nix settings, locale, base packages
-modules/desktop/hyprland.nix  compositor, greeter, portals, audio
-modules/desktop/apps.nix      waybar/wofi/mako/kitty/etc — the default app set
-modules/desktop/theme.nix     GTK theme, icons, fonts
-home/home.nix                 home-manager: keybinds, waybar layout, dotfiles
-install.sh                    bundled on the ISO as `nyx-install`
+flake.nix                     # Entry point, defines two systems: `iso` and `nyx`
+assets/images/wallpaper.png   # Wallpapers and other images
+themes/grub-theme/           # GRUB theme files (background, logo, config)
+home/configs/home.nix         # Home manager configurations
+hosts/
+├── iso/configuration.nix     # Live ISO configuration (auto-login desktop + installer)
+└── templates/                # Template configurations for installation
+    ├── configuration.nix     # Base system configuration
+    ├── disko.nix              # Declarative disk partitioning (if used)
+    ├── hardware-configuration.nix # Auto-generated hardware config
+    └── packages.local.nix.example # Example for local packages
+modules/
+├── core/base.nix             # Bootloader, Nix settings, locale, base packages
+├── desktop/
+│   ├── apps/apps.nix          # Application configurations (waybar, wofi, etc.)
+│   ├── wm/hyprland.nix        # Window manager (Hyprland) configuration
+│   └── theme.nix              # GTK theme, icons, fonts
+└── hardware/                 # Hardware-specific modules (e.g., NVIDIA, Bluetooth)
+install.sh                    # Installation script (bundled on ISO as `nyx-install`)
 ```
 
 ## Build the ISO
@@ -48,7 +60,7 @@ sudo dd if=result/iso/nyx.iso of=/dev/sdX bs=4M status=progress conv=fsync
 
 ## Customizing
 
-- Add/remove packages in `modules/desktop/apps.nix`.
+- Add/remove packages in `modules/desktop/apps/apps.nix`.
 - Change keybinds/waybar/dotfiles in `home/home.nix`.
 - Swap the theme module for a real Catppuccin/Tokyo Night/Rose Pine module.
 - Rename the `me` user and `nyx` hostname in `hosts/template/configuration.nix`.

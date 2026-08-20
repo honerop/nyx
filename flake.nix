@@ -47,7 +47,7 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/template/configuration.nix
+            ./hosts/templates/configuration.nix
             home-manager.nixosModules.home-manager
 			disko.nixosModules.disko
           ];

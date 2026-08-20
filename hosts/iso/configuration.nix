@@ -3,8 +3,8 @@
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
     ../../modules/core/base.nix
-    ../../modules/desktop/hyprland.nix
-    ../../modules/desktop/apps.nix
+    ../../modules/desktop/wm/hyprland.nix
+    ../../modules/desktop/apps/apps.nix
     ../../modules/desktop/theme.nix
   ];
 
@@ -16,7 +16,7 @@
 
 
   system.nixos.distroId = "nyx";
-isoImage.grubTheme = pkgs.callPackage ../../branding/grub-theme { };
+isoImage.grubTheme = pkgs.callPackage ../../themes/grub-theme { };
 
 
   # We don't use ZFS at all; silence the boot.zfs.forceImportRoot default warning

@@ -162,11 +162,11 @@ programs.firefox = {
     enable = true;
   };
 xdg.configFile."hypr/hyprpaper.conf".text = ''
-  preload = ${../assets/wallpaper.png}
+  preload = ${../assets/images/wallpaper.png}
 
   wallpaper {
       monitor = 
-      path = ${../assets/wallpaper.png}
+      path = ${../assets/images/wallpaper.png}
       fit_mode = cover
   }
 '';

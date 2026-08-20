@@ -2,15 +2,15 @@
 {
 imports = [
     ../../modules/core/base.nix
-    ../../modules/desktop/hyprland.nix
-    ../../modules/desktop/apps.nix
+    ../../modules/desktop/wm/hyprland.nix
+    ../../modules/desktop/apps/apps.nix
     ../../modules/desktop/theme.nix
     ../../modules/hardware/bluetooth.nix
     ./hardware-configuration.nix
   ] ++ (if builtins.pathExists ./disko.local.nix
         then [ ./disko.local.nix ]
         else [ ./disko.nix ])
-    ++ lib.optional (builtins.pathExists ./packages.local.nix) ./packages.local.nix;
+    ++ lib.optional (builtins.pathExists ../../hosts/local/configuration.nix)../../hosts/local/configuration.nix ;
 
   networking.hostName = "nyx";
 
