@@ -31,6 +31,76 @@
     cmp.enable = true;          # autocompletion
   };
 };
+programs.wofi = {
+  enable = true;
+  settings = {
+    width = 600;
+    height = 400;
+    location = "center";
+    show = "drun";
+    prompt = "Search...";
+    filter_rate = 100;
+    allow_markup = true;
+    no_actions = true;
+    halign = "fill";
+    orientation = "vertical";
+    content_halign = "fill";
+    insensitive = true;
+    allow_images = true;
+    image_size = 40;
+    gtk_dark = true;
+  };
+  style = ''
+    window {
+      margin: 0px;
+      border: 1px solid #333;
+      background-color: #1e1e2e;
+      border-radius: 10px;
+      font-family: "JetBrainsMono Nerd Font";
+      font-size: 14px;
+    }
+
+    #input {
+      margin: 5px;
+      border: none;
+      color: #cdd6f4;
+      background-color: #313244;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    #inner-box {
+      margin: 5px;
+      border: none;
+      background-color: transparent;
+    }
+
+    #outer-box {
+      margin: 5px;
+      border: none;
+      background-color: transparent;
+    }
+
+    #scroll {
+      margin: 5px;
+      border: none;
+    }
+
+    #text {
+      margin: 5px;
+      color: #cdd6f4;
+    }
+
+    #entry:selected {
+      background-color: #45475a;
+      border-radius: 8px;
+    }
+
+    #text:selected {
+      color: #f5e0dc;
+    }
+  '';
+};
 
   wayland.windowManager.hyprland = {
     enable = true;
