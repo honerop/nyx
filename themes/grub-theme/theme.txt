@@ -1,0 +1,53 @@
+# Nyx GRUB theme
+# Layout mimics the stock nixos-artwork grub2-theme:
+# centered logo/wordmark, boxed entry list with icons, countdown bar at bottom.
+# --- Global ---
+title-text: ""
+desktop-image: "background.png"
+desktop-color: "#e8e8fb"
+terminal-font: "Terminus Regular 16"
+# --- Logo / wordmark, top-center ---
++ image {
+    id = "logo"
+    file = "logo.png"
+    left = 50%-200
+    top = 40
+    width = 400
+    height = 130
+}
+# --- Boot menu box ---
++ boot_menu {
+    left = 15%
+    top = 220
+    width = 70%
+    height = 380
+    item_height = 45
+    item_padding = 10
+    item_spacing = 4
+    item_icon_space = 20
+    icon_width = 24
+    icon_height = 24
+    item_font = "Terminus Regular 16"
+    item_color = "#e8e8f5"
+    selected_item_font = "Terminus Bold 16"
+    selected_item_color = "#00e5ff"
+    selected_item_pixmap_style = "select_*.png"
+    scrollbar = true
+    scrollbar_width = 10
+    scrollbar_thumb = "scrollbar_thumb_*.png"
+    menu_pixmap_style = "menu_*.png"
+}
+# --- Countdown / progress bar, bottom-center ---
++ progress_bar {
+    id = "__timeout__"
+    left = 25%
+    top = 100%-70
+    width = 50%
+    height = 22
+    font = "Terminus Regular 14"
+    text_color = "#1a1a2e"
+    fg_color = "#3a7bd5"
+    bg_color = "#c9c9f0"
+    border_color = "#1a1a2e"
+    text = "@TIMEOUT_NOTIFICATION_MIDDLE@"
+}
