@@ -8,14 +8,14 @@
     ../../modules/desktop/theme.nix
   ];
 
-  image.baseName = lib.mkForce "nyx";
+  image.baseName = lib.mkForce "nux";
   isoImage.squashfsCompression = "zstd -Xcompression-level 6";
 
-  system.nixos.distroName = "Nyx";
+  system.nixos.distroName = "Nux";
   home-manager.extraSpecialArgs = { inherit inputs; };
 
 
-  system.nixos.distroId = "nyx";
+  system.nixos.distroId = "nux";
 isoImage.grubTheme = pkgs.callPackage ../../themes/grub-theme { };
 
 
@@ -23,7 +23,7 @@ isoImage.grubTheme = pkgs.callPackage ../../themes/grub-theme { };
   # by opting in to the new (safer) default explicitly.
   boot.zfs.forceImportRoot = false;
 
-  networking.hostName = "nyx-live";
+  networking.hostName = "nux-live";
 
   # True auto-login: greetd's `initial_session` launches Hyprland directly for
   # `live` on first boot, skipping the tuigreet prompt entirely. (The earlier
@@ -37,7 +37,7 @@ isoImage.grubTheme = pkgs.callPackage ../../themes/grub-theme { };
 
   users.users.live = {
     isNormalUser = true;
-    initialPassword = "nyx";
+    initialPassword = "nux";
     extraGroups = [ "wheel" "networkmanager" "video" ];
   };
   security.sudo.wheelNeedsPassword = false;
@@ -48,9 +48,9 @@ isoImage.grubTheme = pkgs.callPackage ../../themes/grub-theme { };
   # flake — the `result` symlink, `.qcow2` test disks, `.git`, etc. — never
   # get embedded. Without this, anything you happen to leave in the project
   # directory when you run `nix build` gets copied onto the ISO too.
-  environment.etc."nyx-src".source = builtins.path {
+  environment.etc."nux-src".source = builtins.path {
     path = ../..;
-    name = "nyx-src";
+    name = "nux-src";
     filter = path: type:
       let base = baseNameOf path; in
       !(builtins.elem base [ "result" ".git" ".direnv" ".gitignore" ])
@@ -60,7 +60,7 @@ isoImage.grubTheme = pkgs.callPackage ../../themes/grub-theme { };
   };
 
   environment.systemPackages = with pkgs; [
-    (pkgs.writeShellScriptBin "nyx-install" (builtins.readFile ../../install.sh))
+    (pkgs.writeShellScriptBin "nux-install" (builtins.readFile ../../install.sh))
 	inputs.disko.packages.${pkgs.system}.disko
     git
     curl

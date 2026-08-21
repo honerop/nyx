@@ -12,7 +12,7 @@ imports = [
         else [ ./disko.nix ])
     ++ lib.optional (builtins.pathExists ../../hosts/local/configuration.nix)../../hosts/local/configuration.nix ;
 
-  networking.hostName = "nyx";
+  networking.hostName = "nux";
 
   users.users.me = {
     isNormalUser = true;

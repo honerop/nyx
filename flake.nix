@@ -1,5 +1,5 @@
 {
-  description = "Nyx — a NixOS-based Hyprland desktop distro, with ISO installer";
+  description = "Nux — a NixOS-based Hyprland desktop distro, with ISO installer";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -30,7 +30,7 @@
     {
       nixosConfigurations = {
         # `nix build .#nixosConfigurations.iso.config.system.build.isoImage`
-        # Boots straight into a live Hyprland desktop with a `nyx-install` command.
+        # Boots straight into a live Hyprland desktop with a `nux-install` command.
         iso = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
@@ -40,10 +40,10 @@
           ];
         };
 
-        # Template for an installed machine. `nyx-install` copies this repo
+        # Template for an installed machine. `nux-install` copies this repo
         # to /mnt/etc/nixos, generates hosts/template/hardware-configuration.nix,
-        # and runs `nixos-install --flake .#nyx`.
-        nyx = nixpkgs.lib.nixosSystem {
+        # and runs `nixos-install --flake .#nux`.
+        nux = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [

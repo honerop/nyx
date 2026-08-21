@@ -1,5 +1,5 @@
 # ─────────────────────────────────────────────────────────────
-# Nyx host configuration
+# Nux host configuration
 #
 # Nothing here is required. Uncomment any line to override its
 # ─────────────────────────────────────────────────────────────

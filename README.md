@@ -1,7 +1,7 @@
 ## WARNING! 
 This project is in early development.
 
-# Nyx
+# Nux
 
 A NixOS-based Hyprland desktop distro with opinionated defaults, one bootable ISO,
 and a declarative, reproducible installer via Nix flakes
@@ -10,7 +10,7 @@ and a declarative, reproducible installer via Nix flakes
 The project has been reorganized for better clarity and maintainability. Here’s the updated structure:
 
 ```
-flake.nix                     # Entry point, defines two systems: `iso` and `nyx`
+flake.nix                     # Entry point, defines two systems: `iso` and `nux`
 assets/images/wallpaper.png   # Wallpapers and other images
 themes/grub-theme/           # GRUB theme files (background, logo, config)
 home/configs/home.nix         # Home manager configurations
@@ -28,7 +28,7 @@ modules/
 │   ├── wm/hyprland.nix        # Window manager (Hyprland) configuration
 │   └── theme.nix              # GTK theme, icons, fonts
 └── hardware/                 # Hardware-specific modules (e.g., NVIDIA, Bluetooth)
-install.sh                    # Installation script (bundled on ISO as `nyx-install`)
+install.sh                    # Installation script (bundled on ISO as `nux-install`)
 ```
 
 ## Build the ISO
@@ -37,25 +37,25 @@ On any machine with Nix + flakes enabled:
 
 ```bash
 nix build .#nixosConfigurations.iso.config.system.build.isoImage
-# -> result/iso/nyx.iso
+# -> result/iso/nux.iso
 ```
 
 Write it to a USB stick:
 
 ```bash
-sudo dd if=result/iso/nyx.iso of=/dev/sdX bs=4M status=progress conv=fsync
+sudo dd if=result/iso/nux.iso of=/dev/sdX bs=4M status=progress conv=fsync
 ```
 
 ## Install
 
-1. Boot the USB. It auto-logs in as `live` (password `nyx`) straight into Hyprland.
+1. Boot the USB. It auto-logs in as `live` (password `nux`) straight into Hyprland.
 2. Open a terminal (`Super+Return`) and run:
    ```bash
-   sudo nyx-install
+   sudo nux-install
    ```
 3. Follow the prompts (pick the target disk, confirm). It partitions, formats,
    copies this flake to `/mnt/etc/nixos`, generates hardware config, and runs
-   `nixos-install --flake .#nyx`.
+   `nixos-install --flake .#nux`.
 4. Set your user password and reboot as instructed at the end.
 
 ## Customizing
@@ -63,7 +63,7 @@ sudo dd if=result/iso/nyx.iso of=/dev/sdX bs=4M status=progress conv=fsync
 - Add/remove packages in `modules/desktop/apps/apps.nix`.
 - Change keybinds/waybar/dotfiles in `home/home.nix`.
 - Swap the theme module for a real Catppuccin/Tokyo Night/Rose Pine module.
-- Rename the `me` user and `nyx` hostname in `hosts/template/configuration.nix`.
+- Rename the `me` user and `nux` hostname in `hosts/template/configuration.nix`.
 - After the first real install, you'll likely want to split `hosts/template` into
   per-machine hosts (e.g. `hosts/laptop`, `hosts/desktop`) once hardware differs.
 

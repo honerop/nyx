@@ -1,4 +1,4 @@
-# Nyx GRUB theme
+# Nux GRUB theme
 # Layout mimics the stock nixos-artwork grub2-theme:
 # centered logo/wordmark, boxed entry list with icons, countdown bar at bottom.
 # --- Global ---
